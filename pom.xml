@@ -26,13 +26,17 @@
 		</dependency>
 		
 		<dependency>
-      <groupId>org.postgresql</groupId>
-      <artifactId>JDBC</artifactId>
-      <version>1.0.0</version>
-      <scope>system</scope>
-      <systemPath>C:\Users\w7\Downloads\postgresql-9.4-1203.jdbc4.jar</systemPath>
-    </dependency>
-    
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>9.4-1203-jdbc41</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>9.4-1203-jdbc4</version>
+		</dependency>
+		    
 	</dependencies>
 
 </project>
