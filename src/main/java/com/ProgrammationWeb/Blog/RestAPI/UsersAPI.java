@@ -45,6 +45,7 @@ public class UsersAPI {
 			if (c.getId() == id)
 				customer = c;
 		}
+		System.out.println(customer.getPseudo());
 		return customer;
 	}
 	
