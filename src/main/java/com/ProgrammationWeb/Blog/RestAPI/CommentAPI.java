@@ -32,56 +32,5 @@ public class CommentAPI {
 			art.setContenu("...");
 			articles.add(art);
 		}
-	}
-	
-	
-	
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	public List<Users> getCustomers() {
-		return customers;
-	}
-	
-	@GET
-	@Path("customer")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Users getCustomer(@QueryParam("id") long id) {
-		Users customer = null;
-		
-		for (Users c : customers) {
-			if (c.getId() == id)
-				customer = c;
-		}
-		return customer;
-	}
-	
-	@POST
-	@Path("customer")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Users addCustomer(@QueryParam("name") String name, @QueryParam("email") String email) {
-		Users customer = new Users();
-		customer.setId(customers.size());
-		customer.setPseudo(email);
-		customer.setMdp(name);
-		
-		customers.add(customer);
-		
-		return customer;
-	}
-	
-	@GET
-	@Path("article")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Article getArticle(@QueryParam("titre") String titre) {
-		System.out.println("param" + titre );
-		Article article = null;
-		
-		for (Article a : articles) {
-			System.out.println("test art one "  + a.getTitre());
-			if (a.getTitre().equals(titre))
-				article = a;
-		}
-		return article;
-	}
-	
+	}	
 }
