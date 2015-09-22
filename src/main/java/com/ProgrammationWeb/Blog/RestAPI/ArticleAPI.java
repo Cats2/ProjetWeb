@@ -1,0 +1,45 @@
+package com.ProgrammationWeb.Blog.RestAPI;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.inject.Named;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
+
+@Named
+@Path("/")
+public class ArticleAPI {
+	
+	private static List<Article> articles = new ArrayList<Article>();
+	
+	static {
+		for (int i = 0; i <= 5 ; i++) {			
+			Article art = new Article();
+			art.setId(i);
+			art.setTitre("Titre" + i);
+			art.setContenu("...");
+			articles.add(art);
+		}
+	}
+	
+	@GET
+	@Path("article")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Article getArticle(@QueryParam("titre") String titre) {
+		System.out.println("param" + titre );
+		Article article = null;
+		
+		for (Article a : articles) {
+			System.out.println("test art one "  + a.getTitre());
+			if (a.getTitre().equals(titre))
+				article = a;
+		}
+		return article;
+	}
+	
+}
