@@ -28,10 +28,7 @@ public class ArticleAPI {
 			articles.add(art);			
 		}*/
 		JDBC.Connection();
-		Article a = new Article();
-		a = JDBC.getArticle();
-		System.out.println("test nom " + a.getTitre());
-		articles.add(a);
+		articles.addAll(JDBC.getArticle());
 	}
 	
 	@GET
@@ -40,13 +37,19 @@ public class ArticleAPI {
 	public Article getArticle(@QueryParam("titre") String titre) {
 		System.out.println("param" + titre );
 		Article article = null;
-
 		for (Article a : articles) {
-			System.out.println("test art one "  + a.getTitre());
+			System.out.println("test art one "  + a.getId() + " "+ a.getTitre());
 			if (a.getTitre().equals(titre))
 				article = a;
 		}
 		return article;
+	}
+	
+	@GET
+	@Path("articles")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Article> getListArticle() {
+		return articles;
 	}
 	
 }

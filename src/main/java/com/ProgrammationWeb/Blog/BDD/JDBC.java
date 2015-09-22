@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.ProgrammationWeb.Blog.RestAPI.Article;
 
@@ -13,7 +15,7 @@ public class JDBC {
 
 	static Connection connection = null;
 	
-	public static void main(String[] argv) {
+	/*public static void main(String[] argv) {
 
 		 
 	      try {
@@ -27,8 +29,12 @@ public class JDBC {
 	         System.exit(0);
 	      }
 	      System.out.println("Opened database successfully");
-	      getArticle();
-	}
+	      List<Article> articles = getArticle();
+	      for (Article a : articles)
+	      {
+	    	  System.out.println("retour: " + a.getTitre());
+	      }
+	}*/
 	
 	public static void Connection()
 	{
@@ -45,9 +51,10 @@ public class JDBC {
 		 System.out.println("Opened database successfully");
 	}
 	
-	public static Article getArticle()
+	public static List<Article> getArticle()
 	{
-		Article a = new Article();
+		
+		List<Article> articles = new ArrayList<Article>();
 		System.out.println("Get Article");
 		Statement st;
 		try {
@@ -55,10 +62,13 @@ public class JDBC {
 			ResultSet rs = st.executeQuery("SELECT * FROM article");
 			while (rs.next())
 			{
+				Article a = new Article();
 			   System.out.println("Column 1 returned ");
 			   a.setId(rs.getLong(1));
 			   a.setTitre(rs.getString(2));
 			   a.setContenu(rs.getString(3));
+			   System.out.println("article add " + a.getId() + " " + a.getTitre());
+			   articles.add(a);
 			} rs.close();
 			st.close();
 		} catch (SQLException e) {
@@ -66,11 +76,6 @@ public class JDBC {
 			e.printStackTrace();
 			
 		}
-
-		   System.out.println(a.getId() + "nom " + a.getTitre() + " avec :" + a.getContenu());
-		return a;
-		
-
-		
+		return articles;
 	}
 }
