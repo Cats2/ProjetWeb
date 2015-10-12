@@ -1,9 +1,43 @@
 <div id="form_inscr">
 	<form class="navbar-form navbar-left" role="search">
   		<div class="form-group">
-    		<input type="text" class="form-control" placeholder="Pseudo">
-    		<input type="text" class="form-control" placeholder="Mot de Passe">
+    		<input id="pseudo" type="text" class="form-control" placeholder="Pseudo">
+    		<input id="mdp" type="text" class="form-control" placeholder="Mot de Passe">
   		</div>
-  		<button type="S'inscrire" class="btn btn-default">Submit</button>
+  		<button type="button" id="btn_add_user" class="btn btn-default">S'incrire</button>
 	</form>
+</div>
+
+<div id="add_article">
+	<form id="upload_form">
+        <input id="uploadfile" name="uploadfile" type="file" accept="*">
+  		<button type="button" id="btn_add_art" class="btn btn-default">Créer</button>
+	</form>
+  <div id="image_preview">
+    <h4 />
+  <img id="img_up" />
+  <p id="infimg" />
+</div>
+</div>
+
+
+<div id="afflistart" class="row">
+  <div class="col-sm-6 col-md-4">
+    <div class="thumbnail">
+      <img id="imgart" >
+      <div class="caption">
+        <h3 id="titreart">Thumbnail label</h3>
+        <p id="categorie">...</p>
+        <p><a id="select" href="#" class="btn btn-primary" role="button">Afficher</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="boutonmix">
+  <button class="filter" data-filter="all">Tous</button>
+  <button class="filter" data-filter=".film">film</button>
+  <button class="filter" data-filter=".autre">autre</button>
+  <button class="sort" data-sort="my-order:asc">Ascending Order</button>
+  <button class="sort" data-sort="my-order:desc">Descending Order</button>
 </div>

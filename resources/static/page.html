@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <title>Projet</title>
-  <script src="./Js/jquery-1.9.1.min.js"></script>
+  <script src="./Js/jquery-2.1.4.min.js"></script>
   <script src="./Js/script.js"></script>
+  <script src="./Js/jquery.mixitup.min.js"></script>
   <link rel="stylesheet" type="text/css" href="./bootstrap/css/bootstrap.min.css" />
   <link rel="stylesheet" type="text/css" href="./Css/css.css" />
   <script src="./bootstrap/js/bootstrap.min.js"></script>
@@ -14,9 +15,8 @@
 
 
 <body>
-<div id="page">
+  <div id="page">
   <nav class="navbar navbar-inverse">
-     <div class="container-fluid">
     <!-- Brand and toggle get grouped for better MOBILE display -->
     <div class="navbar-header">
       <BUTTON type="BUTTON" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -29,31 +29,62 @@
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
+    <div id="deco">
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li id="acc" class="active"><a id="acc" href="#">Accueil</a></li>
+        <li id="cat" ><a id="acc" href="#">Catégorie</a></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" >Article <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li id="art"><a href="#">Liste des articles</a></li>
-            <li><a href="#">Mes articles postés</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">Ajouter un article</a></li>
           </ul>
         </li>
         <li id="insc"><a id="loisir" href="#">Inscription</a></li>
-        <li id="insc"><a id="loisir" href="#">Profil</a></li>
       </ul>
       <form class="navbar-form navbar-left" role="search">
         <div class="form-group">
-          <input type="text" class="form-control" placeholder="Recherche">
+          <input id="login" type="text" class="form-control" placeholder="Pseudo">
+          <input id="pass" type="text" class="form-control" placeholder="Mot de passe">
         </div>
-        <button type="submit" class="btn btn-default">Submit</button>
+        <button type="button" id="conex" class="btn btn-default">Connexion</button>
+      </form>
+      <form class="navbar-form navbar-left" role="search">
+        <div class="form-group">
+          <input type="text" id="recherche" class="form-control" placeholder="Article/Utilisateur">
+        </div>
+        <button type="button" id="search" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
       </form>
     </div>
   </div>
+    <div id="connexion"  style="display:none">
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li id="acc" class="active"><a id="acc" href="#">Accueil</a></li>
+        <li id="cat" ><a id="acc" href="#">Catégorie</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" >Article <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li id="artl"><a href="#">Liste des articles</a></li>
+            <li id="myart"><a href="#">Mes articles postés</a></li>
+            <li role="separator" class="divider"></li>
+            <li id="add_art"><a href="#">Ajouter un article</a></li>
+          </ul>
+        </li>
+        <li id="profil"><a id="pro_txt" href="#">Profil</a></li>
+        <li id="deconexion"><a id="dec" href="#">Deconnexion</a></li>
+      </ul>
+      <form class="navbar-form navbar-left" role="search">
+        <div class="form-group">
+          <input type="text" id="recherche2" class="form-control" placeholder="Article/Utilisateur">
+        </div>
+        <button type="button" id="search2" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+      </form>
+  </div>
+</div>
   </nav>
-  <div id=contenu_page>
+  <h3 id="titrepage"></h3>
+  <div id="contenu_page">
     <p id="article"> </p>
   </div>
  </div>

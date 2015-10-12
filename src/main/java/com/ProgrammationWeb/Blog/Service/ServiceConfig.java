@@ -28,4 +28,6 @@ public class ServiceConfig {
 	        register(SimpleCORSFilter.class);
 		}
 	}
+	
+	
 }

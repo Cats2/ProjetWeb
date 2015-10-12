@@ -7,6 +7,13 @@ html,body
 	/*background-image:url(../Image/fond.png);*/
 }
 
+body #contenu_page
+{
+	margin-left: 15%;
+	margin-right: 15%;
+}
+
+
 body #contenu_page #ul
 {
 	width: 30%;
@@ -17,4 +24,43 @@ body #contenu_page #div_art
 {
 	width: 60%;
 	margin-left: 20%;
+}
+
+.image  
+{
+	width:100%;
+}
+
+.row
+{
+	float: left;
+	width: 80%;
+}
+
+.col-sm-6
+{
+	float:left;
+	width: 100%;
+}
+
+body #titrepage
+{
+	margin-top: 1%;
+	margin-left: 45%;
+}
+
+body #contenu_page #Container
+{
+	width:100%;
+}
+
+body #contenu_page #Container .mix{
+    float:left;
+    width: 25%;
+    display: none;
+}
+
+.panel-body a 
+{
+	margin-left: 2%;
 }
