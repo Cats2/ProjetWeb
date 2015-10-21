@@ -11,6 +11,7 @@ public class Article {
 	private Date dateCrea;
 	private String image;
 	private String categ;
+	private int avis;
 	
 	public long getId() {
 		return id;
@@ -54,6 +55,13 @@ public class Article {
 	}
 	public void setImage(String image) {
 		this.image = image;
+	}
+	
+	public int getAvis() {
+		return avis;
+	}
+	public void setAvis(int avis) {
+		this.avis = avis;
 	}
 
 }

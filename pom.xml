@@ -28,13 +28,7 @@
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<version>9.4-1203-jdbc41</version>
-		</dependency>
-		<dependency>
-    		<groupId>com.github.kstyrc</groupId>
-    		<artifactId>embedded-redis</artifactId>
-    		<version>0.6</version>
-  		</dependency>
-		
+		</dependency>	
 		    
 	</dependencies>
 

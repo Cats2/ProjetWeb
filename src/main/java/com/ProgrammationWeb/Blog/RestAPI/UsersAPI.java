@@ -59,10 +59,49 @@ public class UsersAPI {
 	@POST
 	@Path("deleteUser")
 	@Produces(MediaType.TEXT_PLAIN)
-	public Boolean deleteCustomer(@QueryParam("login") String login) {
+	public String deleteCustomer(@QueryParam("login") String login) {
 		System.out.println("Users à add " + login);
 		Boolean bl = JDBC.deleteUser(login);
-		return bl;
+		String ret;
+		if (bl)
+		{
+			ret="Votre compte "+ login + " a bien été supprimé";
+		}
+		else
+			ret= "Erreur lors de la suppression  de votre compte";
+		return ret;
+	}
+	
+	@POST
+	@Path("updatePseudo")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String updatePseudo(@QueryParam("old_login") String old_login, @QueryParam("new_login") String new_login) {
+		System.out.println("Pseudo à modif " + old_login);
+		Boolean bl = JDBC.updatePseudo(old_login, new_login);
+		String ret;
+		if (bl)
+		{
+			ret="Votre pseudonyme "+ old_login + " a bien été modifié en " + new_login;
+		}
+		else
+			ret= "Erreur lors du changement de pseudonyme";
+		return ret;
+	}
+	
+	@POST
+	@Path("updateMdp")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String updateMdp(@QueryParam("login") String login, @QueryParam("mdp") String mdp) {
+		System.out.println("Users à modif " + login);
+		Boolean bl = JDBC.updateMdp(login, mdp);
+		String ret;
+		if (bl)
+		{
+			ret="Votre mot de passe a bien été modifié";
+		}
+		else
+			ret= "Erreur lors de la modification du mot de passe  de votre compte";
+		return ret;
 	}
 	
 	@POST

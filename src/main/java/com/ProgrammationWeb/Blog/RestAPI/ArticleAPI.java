@@ -2,9 +2,7 @@ package com.ProgrammationWeb.Blog.RestAPI;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +19,6 @@ import javax.ws.rs.core.MediaType;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ProgrammationWeb.Blog.BDD.JDBC;
@@ -66,6 +63,15 @@ public class ArticleAPI {
 		return articles;
 	}
 	
+	@GET
+	@Path("mesarticles")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Article> getMyListArticle(@QueryParam("user") String pseudo) {
+		List<Article> articles = new ArrayList<Article>();
+		articles.addAll(JDBC.getMyArticle(pseudo));
+		return articles;
+	}
+	
 	@POST
 	@Path("addArticle")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -79,8 +85,6 @@ public class ArticleAPI {
 	
 	@POST
 	@Path("uploadFile")
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	public  ResponseEntity<?>  uploadFile(@RequestParam("uploadfile") MultipartFile uploadfile) {
 		System.out.println("Upload image");
 	  try {
@@ -114,4 +118,27 @@ public class ArticleAPI {
 		articles.addAll(JDBC.getSearchArticle(search));
 		return articles;
 	}
+	
+	@GET
+	@Path("addAvisArticle")
+	@Produces(MediaType.APPLICATION_JSON)
+	public void addAvisArticle(@QueryParam("titre") String titre, @QueryParam("pseudo") String pseudo) {
+		JDBC.addAvis(titre, pseudo);
+		JDBC.majAvis(titre);
+	}
+	
+	@GET
+	@Path("avisArticle")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Boolean AvisArticle(@QueryParam("titre") String titre, @QueryParam("pseudo") String pseudo) {
+		return JDBC.Avis(titre, pseudo);
+	}
+	
+	@GET
+	@Path("top5article")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Article> Top5Article() {
+		return JDBC.getTop5Art();
+	}
+	
 }

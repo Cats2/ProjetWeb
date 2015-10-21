@@ -64,3 +64,8 @@ body #contenu_page #Container .mix{
 {
 	margin-left: 2%;
 }
+
+.panel-title #avis
+{
+	margin-left: 80%;
+}
