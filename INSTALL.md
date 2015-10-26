@@ -15,5 +15,5 @@
 #####Plus d'information:
 La base de données est directement hébergée sur le site: https://www.alwaysdata.com/
 
-Cliquer sur ce lien pour voir le MCD de la base de données du blog:
+Le MCD de la base de données du blog:
 ![alt tag](http://img11.hostingpics.net/pics/207723MCDblog.png)
