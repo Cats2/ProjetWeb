@@ -10,8 +10,10 @@ Il permet de lire des articles qui sont classés dans différentes catégories :
 - Série
 - Festival
 
-Les utilisateurs peuvent accéder aux articles qui sont postés.
-Les utilisateurs connectés peuvent laisser des commentaires, postés des articles et parler dans le t'chat qui est sur le site.
+En mode déconnecté, les utilisateurs peuvent accéder aux articles qui sont postés.
+Une fois inscrit et connecté, les utilisateurs peuvent laisser des commentaires, postés des articles et parler dans le t'chat qui est sur le site.
+Il existe des utilisateurs avec un rôle spécial: "rédacteur", se sont les utilisateurs qui peuvent créer des articles.
+
 
 ##2) Fonctionnalités:
 
@@ -39,21 +41,26 @@ Il est possible de cliquer sur un article pour l'afficher, il apparait alors les
 - Les commantaires sur l'article
 - La possibilité de laisser un commentaire si l'utilisateur est connecté
 
+###### Bouton Afficher les articles aimés
+Une fois connecté, un utilisateur peut afficher la liste des articles qu'il a aimé
+
 ###### Bouton Afficher mes articles
-une fois connecté, l'utilisateur peut afficher les articles qu'il a rédigé en cliquant sur ce bouton
+Une fois connecté, si l'utilisateur a le role de "rédacteur", il peut afficher les articles qu'il a rédigé en cliquant sur ce bouton
 
 ###### Bouton Ajouter un article
-Un utilisateur peut ajouter un article, il devrai alors:
+Un utilisateur qui a un rôle de "rédacteur", peut ajouter un article, il devra alors:
 - Remplir le titre
-- Choisir une catégorie à laquel se rattache l'article
-- Le contenu de l'article
-- L'image associé à l'article
+- Choisir une catégorie à laquelle se rattache l'article
+- Saisir le contenu de l'article
+- Ajouter l'image associé à l'article
 
 #####Bouton Inscription:
 En étant déconnecté, il est possible de s'inscrire sur le site afin de pouvoir:
-- participer au discussion dans le t'chat 
-- laisser des commentaires sur les articles
+- Participer au discussion dans le t'chat 
+- Laisser des commentaires sur les articles
 - Voter pour un article lorsque l'utilisateur l'a apprécié.
+
+Par défaut, un utilisateur est crée avec comme rôle "user", ce qui signifie qu'il peut poster des commentaires, aimer un article et parler dans le t'chat mais qu'il ne peut pas écrire et créer un article.
 
 #####Bouton Profil
 Le bouton apparaît une fois connecté, il permet de:
