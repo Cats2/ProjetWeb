@@ -80,3 +80,5 @@ Il suffit de tapper le titre de l'article ou un mot clef sui se trouve dant le t
 Les articles affichés peuvent être trié par date ou catégorie aussi
 
 #####T'chat
+Les utilisateurs peuvent voir le t'chat défilé même en étant déconnecté.
+Les utilisateurs connectés peuvent partiper au t'chat et poster des messages.
