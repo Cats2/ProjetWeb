@@ -11,26 +11,44 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+import com.ProgrammationWeb.Blog.BDD.JDBC;
+
 @Named
 @Path("/")
 public class CommentAPI {
 	
 	private static List<Users> customers = new ArrayList<Users>();
-	private static List<Article> articles = new ArrayList<Article>();
+	private static List<Commentaires> commentaires = new ArrayList<Commentaires>();
 	
 	static {
-		for (int i = 0; i <= 5 ; i++) {
-			Users customer = new Users();
-			customer.setId(i);
-			customer.setPseudo("Customer " + i);
-			customer.setMdp("Customer" + i +"@gmail.com");
-			customers.add(customer);
-			
-			Article art = new Article();
-			art.setId(i);
-			art.setTitre("Titre" + i);
-			art.setContenu("...");
-			articles.add(art);
+	
+			JDBC.Connection();
+
+			Commentaires com = new Commentaires();
+			com.setIdCom(1);
+			com.setContenuCom("...");
+			commentaires.add(com);
+		
+	}
+	
+	@GET
+	@Path("commentaire")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Commentaires getCommentaire(@QueryParam("commentaire") String contenu_com) {
+		System.out.println("param" + contenu_com );
+		Commentaires article_com = null;
+		for (Commentaires a : commentaires) {
+			System.out.println("test art one "  + a.getIdCom());
+			if (a.getContenuCom().equals(commentaires))
+				article_com = a;
 		}
-	}	
+		return article_com;
+	}
+	
+	@GET
+	@Path("commentaire")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Commentaires> getListComment() {
+		return commentaires;
+	}
 }
