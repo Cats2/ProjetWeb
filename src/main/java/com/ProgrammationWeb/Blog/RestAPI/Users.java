@@ -8,6 +8,7 @@ public class Users {
 	private String pseudo;
 	private String mdp;
 	private Date datecrea;
+	private String role;
 	private int nbart;
 	
 	public long getId() {
@@ -39,5 +40,13 @@ public class Users {
 	}
 	public void setNbArt(int nbart) {
 		this.nbart = nbart;
+	}
+	public void setRole(String role)
+	{
+		this.role = role;
+	}
+	public String getRole()
+	{
+		return role;
 	}
 }

@@ -245,6 +245,7 @@ public class JDBC {
 		String retour = "KO";
 		Statement st;
 		int cmp =0;
+		String role="";
 		try {
 			st = connection.createStatement();
 			ResultSet rs = st.executeQuery("SELECT count(*) AS total FROM users WHERE pseudo ='" + pseudo+ "'");
@@ -264,6 +265,7 @@ public class JDBC {
 			while (rs2.next())
 			{
 				cmp = rs2.getInt("total");
+				//role = rs2.getString(1);
 			}
 			System.out.println("nombre total in bdd " + cmp);
 			if(cmp == 0)
@@ -272,7 +274,7 @@ public class JDBC {
 			}
 			else
 			{
-				retour = pseudo + ", vous êtes maintenant connecté !";
+				retour = pseudo + ", vous êtes maintenant connecté en tant que !";
 			}
 			st.close();
 		} catch (SQLException e) {
@@ -472,18 +474,23 @@ public class JDBC {
 	public static List<Article> getTop5Art()
 	{
 		List<Article> articles = new ArrayList<Article>();
-		/*System.out.println("Top5 Article");
+		System.out.println("Top5 Article");
 		Statement st;
-		String sqlSelect = "SELECT Count(*) as total from users u, users_avis ua, article a where u.id_users=ua.id_users and a.id_art=ua.id_article and pseudo=? and titre=?";
-		int count = 0;
+		String sqlSelect = "SELECT titre, avis from article order by avis desc";
+		String titre;
+		int avis = 0;
+		int cmp =0;
 		try {
 			st = connection.createStatement();
 			PreparedStatement prep = connection.prepareStatement(sqlSelect);
-			prep.setString(1, pseudo);
-			prep.setString(2, titre);
 			ResultSet rs = prep.executeQuery();
 			while (rs.next()) {
-				count = rs.getInt(1);
+				if(cmp >= 5) break;
+				Article a = new Article();
+				a.setTitre(rs.getString(1));
+				a.setAvis(rs.getInt(2));
+				articles.add(a);
+				cmp++;
 			}
 			rs.close();
 			prep.close();
@@ -491,7 +498,68 @@ public class JDBC {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}*/
+		}
 		return articles;
+	}
+	
+	public static List<Article> getLast5Art()
+	{
+		List<Article> articles = new ArrayList<Article>();
+		System.out.println("Last5 Article");
+		Statement st;
+		String sqlSelect = "SELECT titre, categ from article order by id_art desc";
+		String titre;
+		String categ;
+		int cmp =0;
+		try {
+			st = connection.createStatement();
+			PreparedStatement prep = connection.prepareStatement(sqlSelect);
+			ResultSet rs = prep.executeQuery();
+			while (rs.next()) {
+				if(cmp >= 5) break;
+				Article a = new Article();
+				a.setTitre(rs.getString(1));
+				a.setCateg(rs.getString(2));
+				articles.add(a);
+				cmp++;
+			}
+			rs.close();
+			prep.close();
+			st.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return articles;
+	}
+	
+	public static List<Users> getTop5Us()
+	{
+		List<Users> users = new ArrayList<Users>();
+		System.out.println("Top5 Users");
+		Statement st;
+		String sqlSelect = "SELECT pseudo from article order by avis";
+		String titre;
+		int avis = 0;
+		int cmp =0;
+		try {
+			st = connection.createStatement();
+			PreparedStatement prep = connection.prepareStatement(sqlSelect);
+			ResultSet rs = prep.executeQuery();
+			while (rs.next()) {
+				if(cmp >= 5) break;
+				Article a = new Article();
+				a.setTitre(rs.getString(1));
+				a.setAvis(rs.getInt(2));
+				cmp++;
+			}
+			rs.close();
+			prep.close();
+			st.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return users;
 	}
 }

@@ -1,17 +1,41 @@
-<div id="form_inscr">
+<div id="form_inscr" class="formvert">
+  <h3> Inscription </h3>
 	<form class="navbar-form navbar-left" role="search">
+    <fieldset>
+    <legend>Formulaire d'inscription:</legend>
   		<div class="form-group">
-    		<input id="pseudo" type="text" class="form-control" placeholder="Pseudo">
-    		<input id="mdp" type="text" class="form-control" placeholder="Mot de Passe">
+         Pseudonyme:<br>
+    		<input id="pseudo" type="text" class="form-control" placeholder="Pseudo"> <br>
+          Mot de passe:<br>
+    		<input id="mdp" type="text" class="form-control" placeholder="Mot de Passe"><br>
   		</div>
   		<button type="button" id="btn_add_user" class="btn btn-default">S'incrire</button>
+      </fieldset>
 	</form>
 </div>
 
 <div id="add_article">
 	<form id="upload_form">
+    <fieldset>
+    <legend>Créer un article:</legend>
+    <div class="form-group">
+    Titre:<br>
+  <input type="text" name="titre" id="titre" class="form-control">
+  <br> 
+  Contenu:<br>
+  <input type="text" name="contenu" id="contenu" class="form-control">
+  <br>
+  <select name="categ">
+  <option value="volvo">Nouveauté</option>
+  <option value="saab">Film</option>
+  <option value="fiat">Critique</option>
+  <option value="audi">Festival</option>
+  <option value="audi">Série</option>
+  </select>
         <input id="uploadfile" name="uploadfile" type="file" accept="*">
+      </div>
   		<button type="button" id="btn_add_art" class="btn btn-default">Créer</button>
+      </fieldset>
 	</form>
   <div id="image_preview">
     <h4 />
@@ -34,12 +58,15 @@
   </div>
 </div>
 
-<div id="boutonmix">
-  <button class="filter" data-filter="all">Tous</button>
-  <button class="filter" data-filter=".film">film</button>
-  <button class="filter" data-filter=".autre">autre</button>
-  <button class="sort" data-sort="my-order:asc">Ascending Order</button>
-  <button class="sort" data-sort="my-order:desc">Descending Order</button>
+<div id="boutonmix" class="boutonmixup">
+  <button class="filter" data-filter="all">Tous les articles</button>
+  <button class="filter" data-filter=".film">Films</button>
+  <button class="filter" data-filter=".série">Série</button>
+  <button class="filter" data-filter=".nouveauté">Nouveauté</button>
+  <button class="filter" data-filter=".critique">Critiques</button>
+  <button class="filter" data-filter=".festival">Festivals</button>
+  <button class="sort" data-sort="my-order:asc">Ordre Alphabétique</button>
+  <button class="sort" data-sort="my-order:desc">Ordre non alpha</button>
 </div>
 
 
@@ -51,30 +78,73 @@
   </form>
 
 <div id="pageacc">
-  <h3> Top 5 des meilleures articles du Blog ! </h3>
+  <div id="slidorion" class="slidorion">
+    <div class="slider">
+      <div class="slide"><img src="./ImageBlog/ironman.jpg"/></div>
+      <div class="slide"><img src="./ImageBlog/TWD.png"/></div>
+      <div class="slide"><img src="./ImageBlog/Gotham.jpeg"/></div>
+    </div>
+    <div class="accordion">
+      <div class="header"> Actualité</div>
+      <div class="content"> Retouvé toutes les nouveautés sur le Cinéma, les dernières sortis, les films à venir,etc... </div>
+      <div class="header"> Critique</div>
+      <div class="content"> Retrouver des critères sur les films que vous souhaiteriez voir. </div>
+      <div class="header"> Festivals</div>
+      <div class="content"> Retrouver toutes les informations sur les plus grandes cérémonies autour du Cinema. </div>
+    </div>
+  </div>
+  <div class="Topliste">
+  <h4> Articles les plus populaires </h4>
   <ul class="list-group">
-  <li class="list-group-item" id="art1">
-    <span class="badge" id="artb1">14</span>
-    Cras justo odio
+  <li class="list-group-item">
+    <span class="badge"><p class="badgep" id="artb0"> </p><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span></span>
+    <p id="art0">  </p>
   </li>
-  <li class="list-group-item" id="art2">
-    <span class="badge" id="artb2">14</span>
-    Cras justo odio
+  <li class="list-group-item">
+    <span class="badge" ><p class="badgep" id="artb1"> </p><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span></span>
+    <p id="art1"> </p>
   </li>
-  <li class="list-group-item" id="art3">
-    <span class="badge" id="artb3">14</span>
-    Cras justo odio
+  <li class="list-group-item">
+    <span class="badge"><p class="badgep" id="artb2"> </p><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span></span>
+    <p id="art2"> </p>
   </li>
-  <li class="list-group-item" id="art4">
-    <span class="badge" id="artb4">14</span>
-    Cras justo odio
+  <li class="list-group-item">
+    <span class="badge"><p class="badgep" id="artb3"> </p><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span></span>
+    <p id="art3">  </p>
   </li>
-  <li class="list-group-item" id="art5">
-    <span class="badge" id="artb5">14</span>
-    Cras justo odio
+  <li class="list-group-item">
+    <span class="badge"><p class="badgep" id="artb4"> </p><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span></span>
+    <p id="art4"> </p>
   </li>
 </ul>
-<h3> Top 5 des membres les plus actifs du Blog ! </h3>
+</div>
+<div class="Topliste">
+  <h4> Derniers Articles postés </h4>
+  <ul class="list-group">
+  <li class="list-group-item">
+    <span class="badge" id="lastb0"></span>
+    <p id="last0">  </p>
+  </li>
+  <li class="list-group-item">
+    <span class="badge" id="lastb1"></span>
+    <p id="last1"> </p>
+  </li>
+  <li class="list-group-item">
+    <span class="badge" id="lastb2"></span>
+    <p id="last2"> </p>
+  </li>
+  <li class="list-group-item">
+    <span class="badge" id="lastb3"></span>
+    <p id="last3"> </p>
+  </li>
+  <li class="list-group-item">
+    <span class="badge" id="lastb4"></span>
+    <p id="last4"></p>
+  </li>
+</ul>
+</div>
+<div class="Topliste">
+<h4> Membre les plus actifs </h4>
 <ul class="list-group">
   <li class="list-group-item" id="us1">
     <span class="badge" id="usb1">14</span>
@@ -98,3 +168,9 @@
   </li>
 </ul>
 </div>
+</div>
+
+<form id="tchatform" class="formtchat">
+      <input id="message" name="message" type="text" class="form-control">
+      <button type="button" id="btn_message" class="btn btn-default">Envoyer</button>
+</form>

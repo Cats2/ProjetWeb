@@ -19,7 +19,6 @@ import com.ProgrammationWeb.Blog.BDD.JDBC;
 
 @Named
 @Path("/")
-@RestController
 public class UsersAPI {
 	
 	private static List<Users> customers = new ArrayList<Users>();
@@ -118,5 +117,12 @@ public class UsersAPI {
 			userco.setId(1);
 		}
 		return st;
+	}
+	
+	@GET
+	@Path("top5users")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Users> Top5Us() {
+		return JDBC.getTop5Us();
 	}
 }

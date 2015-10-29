@@ -3,6 +3,8 @@ package com.ProgrammationWeb.Blog.RestAPI;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -94,7 +96,7 @@ public class ArticleAPI {
 	    System.out.println("filename : " + filename);
 	    String directory = "/resources/static/Image";
 	    String filepath = Paths.get(directory, filename).toString();
-	    
+	    System.out.println("path " + filepath);
 	    // Save the file locally
 	    BufferedOutputStream stream =
 	        new BufferedOutputStream(new FileOutputStream(new File(filepath)));
@@ -122,9 +124,10 @@ public class ArticleAPI {
 	@GET
 	@Path("addAvisArticle")
 	@Produces(MediaType.APPLICATION_JSON)
-	public void addAvisArticle(@QueryParam("titre") String titre, @QueryParam("pseudo") String pseudo) {
+	public Boolean addAvisArticle(@QueryParam("titre") String titre, @QueryParam("pseudo") String pseudo) {
 		JDBC.addAvis(titre, pseudo);
 		JDBC.majAvis(titre);
+		return true;
 	}
 	
 	@GET
@@ -135,10 +138,31 @@ public class ArticleAPI {
 	}
 	
 	@GET
-	@Path("top5article")
+	@Path("top5articles")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Article> Top5Article() {
 		return JDBC.getTop5Art();
 	}
+	@GET
+	@Path("last5articles")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Article> Last5Art() {
+		return JDBC.getLast5Art();
+	}
+	
+	@POST
+	@Path("tryuploadFile")
+	private static Path readUpload(byte[] content) throws IOException {
+	    //byte[] bytes = new byte[content.readableBytes()];
+	   //content.readBytes(bytes);
+	    //content.release();
+
+	    // write to a temp file
+	    Path imgIn = (Path) Files.createTempFile("./upload", ".jpg");
+	    Files.write(((java.nio.file.Path) imgIn), content);
+	    ((java.nio.file.Path) imgIn).toFile().deleteOnExit();
+
+	    return imgIn;
+	  }
 	
 }

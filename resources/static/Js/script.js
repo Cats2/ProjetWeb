@@ -1,4 +1,15 @@
+var sock = null;
+
+$(document).unload(function()
+{
+    if(sock != null)
+    {
+        sock.close();
+    }
+});
+
 $(document).ready(function(){
+     $('#acc').click(accueil);
      $('#art').click(article);
      $('#artl').click(article);
      $('#myart').click(mesArticles);
@@ -22,20 +33,115 @@ $(document).ready(function(){
                     $('#deco').show('fast');
         }
     accueil();
-})
+    tchat();
+
+    // Create a connection to http://localhost:9000/api/tchat
+sock = new SockJS('http://localhost:9000/greeting');
+
+// Open the connection
+sock.onopen = function() {
+  console.log('open');
+};
+
+// On connection close
+sock.onclose = function() {
+  console.log('close');
+};
+
+// On receive message from server
+sock.onmessage = function(e) {
+  // Get the content
+  console.log('message', e.data);
+  var content = $.parseJSON(e.data);
+
+  if(content.etat == 1)
+  {
+    // Append the text to text area (using jQuery)
+    $('#affichage').append(
+        $('<p />')
+            .html(content.user + " <" + content.date +"> : " + content.message));
+    $('#affichage').stop().animate({scrollTop: $('#affichage').height()}, 2000);
+    }
+  
+};
+
+// Function for sending the message to server
+function sendMessage(){
+  // Get the content from the textbox
+  var message = $('#message').val();
+  var username = localStorage.getItem("connexion");
+
+  // The object to send
+  var send = {
+    message: message,
+    username: username
+  };
+
+  // Send it now
+  sock.send(JSON.stringify(send));
+}
+
+function tchat()
+{
+    var pseudo = localStorage.getItem("connexion");
+    console.log("tcaht " + pseudo);
+    if(pseudo != null)
+    {
+        $('#chatmessage').load('../Html/element.html #tchatform', function () {
+            console.log("tcaht form");
+            $('#btn_message').click(sendMessage);
+
+        });
+
+    }
+    else
+    {
+        $('#chat-message').html("Connectez-vous pour parler");
+    }
+}
+
+});
 
 function accueil()
 {
+    console.log("Accueil");
+    $('#acc').attr('class','active');
+    $('#insc').attr('class','');
+    $('#art').attr('class','');
+    $('#artl').attr('class','');
     $('#contenu_page').load('../Html/element.html #pageacc', function () {
-            $.ajax ({
+          $('#slidorion').slidorion({
+        speed: 1000,
+        interval: 4000,
+        effect: 'slideLeft'
+    });
+        });
+     $.ajax ({
             type: "GET",
-            url: "http://127.0.0.1:9000/api/articles",
+            url: "http://127.0.0.1:9000/api/top5articles",
             success:function (data) 
             {
-            }   
-
-        });
-    })
+                console.log("Success");
+                for(i in data)
+                {
+                    $('#art'+i).html(data[i].titre);
+                    $('#artb'+i).html(data[i].avis + " ");
+                }
+            }
+        })
+     $.ajax ({
+            type: "GET",
+            url: "http://127.0.0.1:9000/api/last5articles",
+            success:function (data) 
+            {
+                console.log("Success");
+                for(i in data)
+                {
+                    $('#last'+i).html(data[i].titre);
+                    $('#lastb'+i).html(data[i].categ);
+                }
+            }
+        })
 
 }
 
@@ -414,7 +520,7 @@ function connexion()
                 {
                     var pseudo = data.split(',');
                     $('#pro_txt').html('Profil: ' + pseudo[0]);
-                    $('#contenu_page').append(
+                    $('#page').append(
                         $('<div />')
                             .attr('class', 'alert alert-success')
                             .attr('role', 'alert')
@@ -423,10 +529,17 @@ function connexion()
                     $('#deco').hide();
                     $('#connexion').show('fast');
                     localStorage.setItem("connexion",pseudo[0]);
+
+                    var index2 = data.indexOf("rédacteur");
+                    if (index2 <0)
+                    {
+                        $('#add_art').attr('style', 'display:none');
+                        $('#myart').attr('style', 'display:none');
+                    }
                 }
                 else
                 {
-                    $('#contenu_page').append(
+                    $('#page').append(
                         $('<div />')
                             .attr('class', 'alert alert-danger')
                             .attr('role', 'alert')
@@ -435,6 +548,7 @@ function connexion()
                 }
             }
     })
+    accueil();
 }
 
 function deconnexion()
@@ -442,6 +556,7 @@ function deconnexion()
     $('#connexion').hide();
     $('#deco').show('fast');
     localStorage.removeItem("connexion");
+    accueil();
 }
 
 function recherche()
