@@ -1,13 +1,18 @@
 package com.ProgrammationWeb.Blog.Service;
 
 import javax.inject.Named;
+import javax.servlet.MultipartConfigElement;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.Path;
 
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.internal.scanning.PackageNamesScanner;
+import org.springframework.boot.context.embedded.MultipartConfigFactory;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 @Configuration
 public class ServiceConfig {
@@ -28,4 +33,6 @@ public class ServiceConfig {
 	        register(SimpleCORSFilter.class);
 		}
 	}
+	
+	
 }

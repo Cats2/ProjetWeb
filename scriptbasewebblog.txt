@@ -1,0 +1,59 @@
+CREATE TABLE article
+(
+  id_art integer NOT NULL,
+  titre character varying(20),
+  contenu character varying(20),
+  id_users integer,
+  date_creat date,
+  image character varying(50),
+  categ character varying(20),
+  CONSTRAINT article_pkey PRIMARY KEY (id_art),
+  CONSTRAINT article_id_users_fkey FOREIGN KEY (id_users)
+      REFERENCES users (id_users) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE article
+  OWNER TO postgres;
+
+CREATE TABLE categorie
+(
+  id_cat integer NOT NULL,
+  categorie character varying(20),
+  CONSTRAINT categorie_pkey PRIMARY KEY (id_cat)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE categorie
+  OWNER TO postgres;
+
+CREATE TABLE users
+(
+  id_users integer NOT NULL,
+  pseudo character varying(20),
+  motdepasse character varying(20),
+  poste character varying(20),
+  datecrea date,
+  CONSTRAINT id_users PRIMARY KEY (id_users)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE users
+  OWNER TO postgres;
+
+INSERT INTO article(
+            id_art, titre, contenu, id_users, date_creat, image, categ)
+    VALUES (?, ?, ?, ?, ?, ?, ?);
+
+INSERT INTO categorie(
+            id_cat, categorie)
+    VALUES (?, ?);
+INSERT INTO users(
+            id_users, pseudo, motdepasse, poste, datecrea)
+    VALUES (?, ?, ?, ?, ?);
+
+	
