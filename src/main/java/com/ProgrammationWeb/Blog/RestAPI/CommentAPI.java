@@ -18,37 +18,25 @@ import com.ProgrammationWeb.Blog.BDD.JDBC;
 public class CommentAPI {
 	
 	private static List<Users> customers = new ArrayList<Users>();
-	private static List<Commentaires> commentaires = new ArrayList<Commentaires>();
 	
 	static {
-	
-			JDBC.Connection();
-
-			Commentaires com = new Commentaires();
-			com.setIdCom(1);
-			com.setContenuCom("...");
-			commentaires.add(com);
-		
+		JDBC.Connection();
 	}
 	
 	@GET
-	@Path("commentaire")
+	@Path("commentaires")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Commentaires getCommentaire(@QueryParam("commentaire") String contenu_com) {
-		System.out.println("param" + contenu_com );
-		Commentaires article_com = null;
-		for (Commentaires a : commentaires) {
-			System.out.println("test art one "  + a.getIdCom());
-			if (a.getContenuCom().equals(commentaires))
-				article_com = a;
-		}
-		return article_com;
-	}
-	
-	@GET
-	@Path("commentaire")
-	@Produces(MediaType.APPLICATION_JSON)
-	public List<Commentaires> getListComment() {
+	public List<Commentaires> getListComment(@QueryParam("titre") String titre) {
+		List<Commentaires> commentaires = new ArrayList<Commentaires>();
+		commentaires.addAll(JDBC.getCommentaires(titre));
 		return commentaires;
 	}
+	
+	@POST
+	@Path("addComm")
+	@Produces(MediaType.APPLICATION_JSON)
+	public void addArticle(@QueryParam("titre") String titre, @QueryParam("pseudo") String pseudo, @QueryParam("contenu") String contenu) {
+		JDBC.addCommentaire(pseudo, contenu, titre);
+	}
+
 }

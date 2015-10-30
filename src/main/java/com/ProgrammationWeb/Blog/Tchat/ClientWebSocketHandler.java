@@ -3,7 +3,9 @@ package com.ProgrammationWeb.Blog.Tchat;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.json.simple.JSONArray;
@@ -13,6 +15,9 @@ import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
+
+import com.ProgrammationWeb.Blog.BDD.JDBC;
+import com.ProgrammationWeb.Blog.RestAPI.ChatMessage;
 
 public class ClientWebSocketHandler extends TextWebSocketHandler {
 
@@ -31,7 +36,6 @@ public class ClientWebSocketHandler extends TextWebSocketHandler {
     	GestionClient.addClient(client);
     	DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
     	Date d = new Date();
-    	// Charger message 5 derniers messages order by date
     	JSONObject j = new JSONObject();
     	j.put("etat", 0);
     	GestionClient.broadcast(j.toJSONString());
@@ -47,6 +51,7 @@ public class ClientWebSocketHandler extends TextWebSocketHandler {
     	DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
     	Date d = new Date(); //time
     	// Add message BDD
+    	JDBC.addChatMessage((String)obj.get("username"), (String)obj.get("message"));
     	JSONObject j = new JSONObject();
     	j.put("etat", 1);
     	j.put("user", obj.get("username"));

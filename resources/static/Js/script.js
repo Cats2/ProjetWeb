@@ -32,6 +32,27 @@ $(document).ready(function(){
               $('#connexion').hide();
                     $('#deco').show('fast');
         }
+
+     var pseudo = localStorage.getItem("connexion");
+      $.ajax ({
+                        type: "GET",
+                        url: "http://127.0.0.1:9000/api/poste?pseudo="+pseudo,
+                        success:function (data) 
+                        {
+                            var index2 = data.indexOf("rédacteur");
+                            console.log("poste " + data + " " + index2);
+                            if (index2 >=0)
+                            {
+                                $('#add_art').show();
+                                $('#myart').show();
+                            }
+                            else
+                            {
+                                $('#add_art').hide();
+                                $('#myart').hide();
+                            }
+                        }
+                    })
     accueil();
     tchat();
 
@@ -81,6 +102,7 @@ function sendMessage(){
   sock.send(JSON.stringify(send));
 }
 
+
 function tchat()
 {
     var pseudo = localStorage.getItem("connexion");
@@ -90,17 +112,16 @@ function tchat()
         $('#chatmessage').load('../Html/element.html #tchatform', function () {
             console.log("tcaht form");
             $('#btn_message').click(sendMessage);
+            $('#message').empty();
 
         });
 
     }
     else
     {
-        $('#chat-message').html("Connectez-vous pour parler");
+        $('#chatmessage').html("Connectez-vous pour parler");
     }
 }
-
-});
 
 function accueil()
 {
@@ -288,6 +309,7 @@ function selectarticle()
     console.log("function selectarticle");
     var id = this.id;
     var pseudo = localStorage.getItem("connexion");
+    console.log(pseudo);
     var avis;
      $.ajax ({
             type: "GET",
@@ -314,7 +336,13 @@ function selectarticle()
                                                     $('<span />')
                                                         .attr('class', 'glyphicon glyphicon-thumbs-up')
                                                         .attr('id', 'htmlavis')
-                                                        .html("  " +data.avis)))))
+                                                        .html("  " +data.avis)))
+                                        .append(
+                                            $('<a />')
+                                                .attr('class', 'btn btn-default')
+                                                .attr('role', 'button')
+                                                .attr('id', 'addcomm')
+                                                .html("Ajouter un commentaire"))))
                         .append(
                             $('<img />')
                                 .attr('class', 'image')
@@ -324,6 +352,28 @@ function selectarticle()
                                 .attr('class', 'panel-body')
                                 .html(data.contenu))
                     )
+                    if (pseudo != null)
+                    {
+                        $.ajax ({
+                            type: "GET",
+                            url: "http://127.0.0.1:9000/api/avisArticle?titre="+id+"&pseudo="+pseudo,
+                            success:function (data) 
+                            {
+                                console.log("data " + data);
+                                if(data == true)
+                                {
+                                    console.log("ture");
+                                    $('#avis').attr('class', 'btn btn-primary');
+                                    $('#avis').attr('disabled', 'disabled');
+                                }
+                            }
+                        })
+                    }
+                    if(pseudo == null)
+                    {
+                        $('#avis').attr('disabled', 'disabled');
+                        $('#addcomm').attr('disabled', 'disabled');
+                    }
                     $('#avis').click(function(){
                         var pseudo = localStorage.getItem("connexion");
                         console.log('ajout avis' + id)
@@ -339,25 +389,65 @@ function selectarticle()
                             }
                         })
                     });
-            }
-    })
-    if (pseudo != null)
-    {
-     $.ajax ({
-            type: "GET",
-            url: "http://127.0.0.1:9000/api/avisArticle?titre="+id+"&pseudo="+pseudo,
-            success:function (data) 
-            {
-                console.log("data " + data);
-                if(data == true)
+                    $('#addcomm').click(function(){
+                        {
+                            $('#contenu_page').empty();
+                            $('#contenu_page').load('../Html/element.html #form_comm', function () {
+                                $('#btn_add_comm').click(function(){
+                                    var pseudo = localStorage.getItem("connexion");
+                                    var contenu = $("#textmessage").val();
+                                    console.log(contenu);
+                                    $.ajax ({
+                                        type: "POST",
+                                        url: "http://127.0.0.1:9000/api/addComm?titre="+id+"&pseudo="+pseudo+"&contenu="+contenu,
+                                        success:function (data) 
+                                        {
+                                            $('#avis').attr('class', 'btn btn-primary');
+                                            $('#avis').attr('disabled', 'disabled');
+                                            //var note = $('#htmlavis').val();
+                                            $('#htmlavis').html(parseInt($('#htmlavis').html(), 10)+1);
+                                        }
+                                    })
+                                });
+                            });
+                        }
+
+function addcomm()
+{
+    
+}
+                    });
+            $.ajax ({
+                type: "GET",
+                url: "http://127.0.0.1:9000/api/commentaires?titre="+id,
+                success:function (data) 
                 {
-                    console.log("ture");
-                    $('#avis').attr('class', 'btn btn-primary');
-                    $('#avis').attr('disabled', 'disabled');
+                console.log("data " + data);
+                for (i in data)
+                {
+                    console.log(data[i]);
+                $('#contenu_page').append(
+                    $('<div />')
+                        .attr('id', 'comm')
+                        .attr('class','panel panel-default')
+                        .append(
+                            $('<div />')
+                                .attr('class', 'panel-heading')
+                                .html(data[i].pseudous + " posté à " + data[i].dateposte))
+                        .append(     
+                                     $('<div />')
+                                .attr('class', 'panel-body')
+                                .attr('id', 'panelbody')
+                                .append(                              
+                                     $('<p />')
+                                        .html(data[i].contenuCom))))
                 }
             }
         })
-    }
+
+            }
+    })
+    
 }
 
 function addAvis()
@@ -520,32 +610,28 @@ function connexion()
                 {
                     var pseudo = data.split(',');
                     $('#pro_txt').html('Profil: ' + pseudo[0]);
-                    $('#page').append(
-                        $('<div />')
-                            .attr('class', 'alert alert-success')
-                            .attr('role', 'alert')
-                            .html(data)
-                    )
                     $('#deco').hide();
                     $('#connexion').show('fast');
                     localStorage.setItem("connexion",pseudo[0]);
-
-                    var index2 = data.indexOf("rédacteur");
-                    if (index2 <0)
-                    {
-                        $('#add_art').attr('style', 'display:none');
-                        $('#myart').attr('style', 'display:none');
-                    }
                 }
                 else
                 {
-                    $('#page').append(
-                        $('<div />')
-                            .attr('class', 'alert alert-danger')
-                            .attr('role', 'alert')
-                            .html(data)
-                    )
                 }
+                tchat();
+                $.ajax ({
+                        type: "GET",
+                        url: "http://127.0.0.1:9000/api/poste?login="+pseudo,
+                        success:function (data) 
+                        {
+                            var index2 = data.indexOf("rédacteur");
+                            console.log("post" + data);
+                            if (index2 >0)
+                            {
+                                $('#add_art').attr('style', 'display:none');
+                                $('#myart').attr('style', 'display:none');
+                            }
+                        }
+                    })
             }
     })
     accueil();
@@ -557,6 +643,7 @@ function deconnexion()
     $('#deco').show('fast');
     localStorage.removeItem("connexion");
     accueil();
+    tchat();
 }
 
 function recherche()
@@ -927,3 +1014,5 @@ function SupprimerCompte()
             }
         })
 }
+
+});

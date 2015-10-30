@@ -6,9 +6,9 @@ import java.sql.Date;
 public class Commentaires {
 	
 	private long id_com;
-	private String contenu_com;
-	private String pseudo_user_com;
-	private Date date_post_com;
+	private String contenu;
+	private String pseudous;
+	private Date dateposte;
 	
 	public long getIdCom() {
 		return id_com;
@@ -18,10 +18,22 @@ public class Commentaires {
 	}
 	
 	public String getContenuCom() {
-		return contenu_com;
+		return contenu;
 	}
 	public void setContenuCom(String contenu) {
-		this.contenu_com = contenu;
+		this.contenu = contenu;		
+	}
+	public String getPseudous() {
+		return pseudous;
+	}
+	public void setPseudous(String pseudous) {
+		this.pseudous = pseudous;
+	}
+	public Date getDateposte() {
+		return dateposte;
+	}
+	public void setDateposte(Date dateposte) {
+		this.dateposte = dateposte;
 	}
 
 }

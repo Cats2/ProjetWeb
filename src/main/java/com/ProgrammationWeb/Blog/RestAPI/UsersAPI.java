@@ -45,6 +45,15 @@ public class UsersAPI {
 		return customer;
 	}
 	
+	@GET
+	@Path("poste")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String getposte(@QueryParam("pseudo") String pseudo) {
+		String poste = null;
+		poste = JDBC.getposte(pseudo);
+		return poste;
+	}
+	
 	@POST
 	@Path("addUser")
 	@Produces(MediaType.TEXT_PLAIN)

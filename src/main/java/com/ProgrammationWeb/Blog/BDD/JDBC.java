@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.ProgrammationWeb.Blog.RestAPI.Article;
+import com.ProgrammationWeb.Blog.RestAPI.ChatMessage;
+import com.ProgrammationWeb.Blog.RestAPI.Commentaires;
 import com.ProgrammationWeb.Blog.RestAPI.Users;
 
 
@@ -65,7 +67,7 @@ public class JDBC {
 		Statement st;
 		try {
 			st = connection.createStatement();
-			ResultSet rs = st.executeQuery("SELECT * FROM article ORDER BY titre");
+			ResultSet rs = st.executeQuery("SELECT * FROM article ORDER BY date_creat");
 			while (rs.next())
 			{
 				Article a = new Article();
@@ -97,7 +99,7 @@ public class JDBC {
 		Statement st;
 		try {
 			st = connection.createStatement();
-			ResultSet rs = st.executeQuery("SELECT * FROM article a, users u where a.id_users = u.id_users AND pseudo=\'"+pseudo+"\' ORDER BY titre");
+			ResultSet rs = st.executeQuery("SELECT * FROM article a, users u where a.id_users = u.id_users AND pseudo=\'"+pseudo+"\' ORDER BY date_creat");
 			while (rs.next())
 			{
 				Article a = new Article();
@@ -130,7 +132,7 @@ public class JDBC {
 		String titremin = titre.toLowerCase();
 		try {
 			st = connection.createStatement();
-			ResultSet rs = st.executeQuery("SELECT * FROM article where lower(titre) LIKE \'%"+ titremin +"%\' ORDER BY titre");
+			ResultSet rs = st.executeQuery("SELECT * FROM article where lower(titre) LIKE \'%"+ titremin +"%\' ORDER BY date_creat");
 			while (rs.next())
 			{
 				Article a = new Article();
@@ -561,5 +563,172 @@ public class JDBC {
 			e.printStackTrace();
 		}
 		return users;
+	}
+	
+	public static List<Commentaires> getCommentaires(String titre)
+	{
+		
+		List<Commentaires> commentaires = new ArrayList<Commentaires>();
+		System.out.println("Get Comm");
+		Statement st;
+		try {
+			st = connection.createStatement();
+			ResultSet rs = st.executeQuery("SELECT c.dateposte, u.pseudo, c.message FROM article a, users u, commentaire c where a.id_art = c.id_art and c.id_user=u.id_users and titre='"+ titre+"' order by dateposte desc");
+			while (rs.next())
+			{
+				Commentaires c = new Commentaires();
+			   c.setDateposte(rs.getDate(1));
+			   c.setPseudous(rs.getString(2));
+			   c.setContenuCom(rs.getString(3));
+			   commentaires.add(c);
+			} rs.close();
+			st.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+		}
+		return commentaires;
+	}
+	
+	public static List<ChatMessage> get5ChatMessage()
+	{
+		
+		List<ChatMessage> messages = new ArrayList<ChatMessage>();
+		System.out.println("Get Comm");
+		Statement st;
+		int i = 0;
+		try {
+			st = connection.createStatement();
+			ResultSet rs = st.executeQuery("SELECT datepost, pseudo, message FROM tchat t, users u where t.id_user=u.id_user order by datepost desc");
+			while (rs.next())
+			{
+			   ChatMessage cm = new ChatMessage();
+			   cm.setDateposte(rs.getDate(1));
+			   cm.setUser(rs.getString(2));
+			   cm.setContent(rs.getString(3));
+			   messages.add(cm);
+			   i++;
+			   if (i == 5) break;
+			} rs.close();
+			st.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+		}
+		return messages;
+	}
+	
+	public static Boolean addChatMessage(String user, String contenu)
+	{
+		System.out.println("Ajout Message Tchat");
+		String sql = "INSERT INTO tchat values ( ?, ?, ?, ?)";
+		Boolean retour;
+		Statement st;
+		int id_us =0;
+		int cmp=0;
+		java.util.Date utilDate = new java.util.Date();
+	    java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+		try {
+			st = connection.createStatement();
+			ResultSet rs = st.executeQuery("SELECT id_users FROM users where pseudo ='"+ user +"'");
+			while (rs.next())
+			{
+				id_us = rs.getInt(1);
+			}
+			st = connection.createStatement();
+			ResultSet rs2 = st.executeQuery("SELECT count(*) FROM tchat");
+			while (rs2.next())
+			{
+				cmp = rs2.getInt(1);
+			}
+			st = connection.createStatement();
+			cmp++;
+			PreparedStatement prep = connection.prepareStatement(sql);
+			prep.setLong(1,cmp);
+			prep.setString(2, contenu);
+			prep.setDate(3, sqlDate );
+			prep.setLong(4, id_us);
+			prep.execute();
+			st.close();
+			prep.close();
+			retour = true;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			retour = false;
+		}
+		return retour;
+	}
+	
+	public static Boolean addCommentaire(String user, String contenu, String titre)
+	{
+		System.out.println("Ajout Message Tchat");
+		String sql = "INSERT INTO commentaire values ( ?, ?, ?, ?, ?)";
+		Boolean retour;
+		Statement st;
+		int id_us =0;
+		int id_art = 0;
+		int cmp=0;
+		java.util.Date utilDate = new java.util.Date();
+	    java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+		try {
+			st = connection.createStatement();
+			ResultSet rs = st.executeQuery("SELECT id_users FROM users where pseudo ='"+ user +"'");
+			while (rs.next())
+			{
+				id_us = rs.getInt(1);
+			}
+			ResultSet rs3 = st.executeQuery("SELECT id_art FROM article where titre ='"+ titre +"'");
+			while (rs3.next())
+			{
+				id_art = rs3.getInt(1);
+			}
+			ResultSet rs2 = st.executeQuery("SELECT count(*) FROM commentaire");
+			while (rs2.next())
+			{
+				cmp = rs2.getInt(1);
+			}
+			cmp++;
+			PreparedStatement prep = connection.prepareStatement(sql);
+			prep.setLong(1,cmp);
+			prep.setInt(2, id_us);
+			prep.setInt(3, id_art );
+			prep.setDate(4, sqlDate);
+			prep.setString(5, contenu);
+			prep.execute();
+			st.close();
+			prep.close();
+			retour = true;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			retour = false;
+		}
+		return retour;
+	}
+	
+	public static String getposte(String pseudo)
+	{
+		Statement st;
+		String sqlSelect = "SELECT poste from users where pseudo='"+pseudo+"'";
+		String poste="";
+		try {
+			st = connection.createStatement();
+			PreparedStatement prep = connection.prepareStatement(sqlSelect);
+			ResultSet rs = prep.executeQuery();
+			while (rs.next()) {
+				poste = rs.getString(1);
+			}
+			rs.close();
+			prep.close();
+			st.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("poste" + poste);
+		return poste;
 	}
 }

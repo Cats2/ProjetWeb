@@ -115,7 +115,7 @@ body #contenu_page #accueil
 .Topliste
 {
 	width:30%;
-	margin-left: 3%;
+	margin-left: 7%;
 	margin-top:3%;
 	float:left;
 }
@@ -185,3 +185,15 @@ body #tchat #affichage p
   border-width: 1px;
 }
 
+body #contenu_page #comm
+{
+  margin-left: 15%;
+  margin-right: 15%;
+}
+
+.formvert
+{
+  margin-left: 30%;
+  border-style: inset;
+  border-width: 1px;
+}
