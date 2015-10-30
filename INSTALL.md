@@ -16,4 +16,4 @@
 La base de données est directement hébergée sur le site: https://www.alwaysdata.com/
 
 Le MCD de la base de données du blog:
-![alt tag](http://img11.hostingpics.net/pics/207723MCDblog.png)
+![alt tag](http://img15.hostingpics.net/pics/779576mocodo.png)
